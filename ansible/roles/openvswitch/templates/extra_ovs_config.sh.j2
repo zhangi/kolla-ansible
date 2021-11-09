@@ -1,0 +1,8 @@
+#!/bin/bash
+docker exec openvswitch_vswitchd ovs-vsctl --may-exist add-br {{ item.bridge_name }}
+docker exec openvswitch_vswitchd ovs-vsctl --may-exist add-port {{ item.bridge_name }} {{ item.interface_name }} -- set Interface {{ item.interface_name }} type=internal
+docker exec openvswitch_vswitchd ovs-vsctl --may-exist add-port {{ item.bridge_name }} {{ item.external_interface_name }}
+ipaddr=`ip addr show {{ item.external_interface_name }}  | awk '/inet / { print $2 }'`
+ip addr flush dev {{ item.external_interface_name }}
+ip addr replace $ipaddr dev {{ item.interface_name }}
+ip link set {{ item.interface_name }} up

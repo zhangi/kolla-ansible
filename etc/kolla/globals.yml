@@ -153,6 +153,15 @@
 # addresses for that reason.
 #neutron_external_interface: "eth1"
 
+# As there is no IP configured on the neutron_external_interfaces, we can add
+# ports under the OVS bridge with internal interface to hold the IP 
+# so that we don't lose access to the server.
+#neutron_internal_ports:
+#  - interface_name: eth3
+#    bridge_name: br-ex2
+#    external_interface_name: eth2
+     
+
 # Valid options are [ openvswitch, ovn, linuxbridge, vmware_nsxv, vmware_nsxv3, vmware_dvs ]
 # if vmware_nsxv3 is selected, enable_openvswitch MUST be set to "no" (default is yes)
 #neutron_plugin_agent: "openvswitch"
